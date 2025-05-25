@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>The Hangman</h1>
+
+  {% if user.is_authenticated %}
+    <p>Ласкаво просимо, {{ user.username }}!</p>
+
+    {% if current_game %}
+      <p>У вас є незавершена гра.</p>
+      <a href="{% url 'play_game' current_game.id %}" class="btn btn-primary">Продовжити гру</a>
+    {% else %}
+      <a href="{% url 'start_game' %}" class="btn btn-success">Почати нову гру</a>
+    {% endif %}
+
+    <hr>
+    <h3>Ваша статистика</h3>
+    <ul>
+      <li>Завершених ігор: {{ total_games }}</li>
+      <li>Середня кількість спроб: {{ avg_tries }}</li>
+    </ul>
+
+  {% else %}
+    <p>Гра "The Hangman"- це логічна гра, у якій вам необхідно відгадати загадане комп'ютером слово, називаючи літери (у вас є 20 спроб). Будьте уважні, аби не потрапити на шибеницю. Удачі !.</p>
+    <p>Якщо літера вгадана правильно, вам покажуть її місце в слові, якщо ж літера вгадана неправильно,- побачите відповідне повідомлення .</p>
+    <a href="{% url 'login' %}" class="btn btn-primary">Увійти</a>
+    <a href="{% url 'signup' %}" class="btn btn-secondary">Зареєструватися</a>
+  {% endif %}
+{% endblock %}

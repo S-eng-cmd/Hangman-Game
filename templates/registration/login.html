@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Вхід</h2>
+  {% if form.errors %}
+    <div class="alert alert-danger">
+      <p>Будь ласка, виправте наступні помилки:</p>
+      {{ form.errors }}
+    </div>
+  {% endif %}
+  
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Увійти</button>
+  </form>
+  <p>Не маєте акаунта? <a href="{% url 'signup' %}">Зареєструватися</a></p>
+{% endblock %}

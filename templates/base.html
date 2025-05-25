@@ -1,0 +1,30 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>The Hangman</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container py-4">
+  <nav class="mb-4">
+    {% if user.is_authenticated %}
+      <span class="me-2">Вітаємо, {{ user.username }}!</span>
+      <a href="{% url 'index' %}" class="btn btn-outline-secondary btn-sm">Головна</a>
+      {% if user.is_superuser %}
+        <a href="/admin/" class="btn btn-outline-warning btn-sm">Адмінка</a>
+      {% endif %}
+      <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger btn-sm">Вийти</button>
+      </form>
+    {% else %}
+      <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Вхід</a>
+      <a href="{% url 'signup' %}" class="btn btn-outline-success btn-sm">Реєстрація</a>
+    {% endif %}
+  </nav>
+
+  {% block content %}{% endblock %}
+</body>
+</html>

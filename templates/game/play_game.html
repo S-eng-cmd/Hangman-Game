@@ -1,0 +1,55 @@
+
+{% extends "base.html" %}
+{% block content %}
+  <h2>Гра №{{ game.id }}
+  
+  </h2>
+  <p>
+    <a href="{% url 'index' %}">Повернутися на головну</a>
+  </p>
+
+  <p>Слово: {{ display_word }}</p>
+
+  <hr>
+  {% if game.is_finished %}
+    {% if game.has_won %}
+      <div class="alert alert-success mt-3">
+        Вітаємо! Ви вгадали слово!
+      </div>
+    {% else %}
+      <div class="alert alert-danger mt-3">
+        Ви програли! Слово було: {{ game.word }}
+      </div>
+    {% endif %}
+  {% else %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Надіслати</button>
+    </form>
+  {% endif %}
+
+  <h4>Історія спроб</h4>
+  {% if tries %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Літера</th>
+          <th>Результат</th>
+          <th>Час</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for try in tries %}
+          <tr>
+            <td>{{ try.letter }}</td>
+            <td>{% if try.is_correct %}Вірно{% else %}Невірно{% endif %}</td>
+            <td>{{ try.created_at }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Спроб ще не було.</p>
+  {% endif %}
+{% endblock %}
