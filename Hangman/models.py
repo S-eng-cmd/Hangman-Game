@@ -15,7 +15,7 @@ class Game(models.Model):
         "Загадане слово", max_length=50
     )
     max_tries = models.PositiveIntegerField(
-        "Максимальна кількість спроб", default=20, validators=[MinValueValidator(1), MaxValueValidator(10)]
+        "Максимальна кількість спроб", default=20, validators=[MinValueValidator(1), MaxValueValidator(20)]
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
